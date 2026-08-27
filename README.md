@@ -2,6 +2,8 @@
 
 一个本地优先的工作区脱敏 App，同时提供可复现的命令行工作流和 GitHub 隐私门禁。
 
+**在线 App：** <https://lucienin.github.io/workspace-redaction-app/>
+
 ## 它解决什么
 
 当你准备把本地项目、问题样例、日志片段或内部工作流发布到 GitHub 时，Workspace Veil 用一条保守的管道降低误传风险：
