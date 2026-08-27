@@ -1,90 +1,110 @@
-# Workspace Veil
+# Local Wiki Veil
 
-一个本地优先的工作区脱敏 App，同时提供可复现的命令行工作流和 GitHub 隐私门禁。
+针对本地 **LLM Wiki** 知识库的公开前脱敏 App 与可复现工作流。
 
-**在线 App：** <https://lucienin.github.io/workspace-redaction-app/>
+- 在线 App：<https://lucienin.github.io/workspace-redaction-app/>
+- 执行依据：[docs/execution-basis.md](docs/execution-basis.md)
+- 隐私门禁：[.github/workflows/privacy-gate.yml](.github/workflows/privacy-gate.yml)
 
-## 它解决什么
+## 它解决的不是“怎么把整个知识库传上网”
 
-当你准备把本地项目、问题样例、日志片段或内部工作流发布到 GitHub 时，Workspace Veil 用一条保守的管道降低误传风险：
+本地知识库同时包含原始资料、生成 Wiki、图谱、向量索引、对话、任务队列和私密档案。对整库做字符串替换后上传，仍可能泄露语义、来源、文件名、元数据和可组合身份线索。
 
-`界定范围 -> 本地扫描 -> 脱敏副本 -> 人工复核 -> CI 门禁 -> 远程回读`
+Local Wiki Veil 采用另一条路线：
 
-它不会宣称“扫描通过就绝对安全”。规则只能覆盖已知模式，人工复核仍是发布前的必经门。
+`确定公开目的 → 知识分区 → 只抽取方法 → 一般化身份与环境 → 内容零知识快照 → 本地扫描 → 最小提交 → 远端回读`
 
-## 快速开始
+公开仓库保留工作原理、判断门、脚本和验证方式；原始资料与私密知识继续留在本机。
 
-### 1. 打开交互说明 App
+## 本地 LLM Wiki 如何工作
+
+1. `raw/sources/` 保存原始资料与来源证据。
+2. 摄入先分析实体、概念、论点、冲突和结构，再生成带 frontmatter、`sources` 与 `[[wikilinks]]` 的 Wiki 页面。
+3. `wiki/` 形成可维护的来源卡、概念、综合、比较和工作流页面。
+4. Wikilinks、来源重叠、共同邻居和类型亲和构成知识图谱；LanceDB 保存可选向量索引。
+5. 查询组合关键词、向量和图谱扩展，并在上下文预算内读取证据。
+
+这套架构的重点是“原始资料 → 持久 Wiki → 可再生成索引”，不是把所有文档直接视为可公开的向量语料。
+
+## 五个隐私分区
+
+| 分区 | 代表目录 | 默认决定 |
+|---|---|---|
+| 原始资料层 | `raw/sources/`, `raw/assets/` | 仅限本地 |
+| 私密档案层 | `archive/private-*/` | 禁止公开 |
+| 运行状态层 | `.llm-wiki/chats/`, `.llm-wiki/lancedb/`, 队列与缓存 | 禁止公开 |
+| Wiki 生成层 | `wiki/sources/`, `wiki/synthesis/`, `wiki/concepts/` | 人工复核并抽象 |
+| 方法与工具层 | `tools/`, `schema.md`, `purpose.md` | 去身份审计后的公开候选 |
+
+“由 LLM 生成”不等于“可以公开”。Wiki 页面仍可能包含来自私有资料的事实、原话、关系和业务判断。
+
+## 内容零知识快照
+
+`scripts/audit_local_kb.py` 只读本地 LLM Wiki 的目录计数和白名单状态字段：
+
+```bash
+python3 scripts/audit_local_kb.py "$LOCAL_KB" \
+  --output ./local-kb-snapshot.json
+```
+
+输出明确声明：
+
+- 不包含知识原文。
+- 不包含标题和文件名。
+- 不包含源文件路径或本机绝对路径。
+- 不能证明任何具体 Wiki 页面适合公开。
+
+仓库中的 [data/local-kb-snapshot.json](data/local-kb-snapshot.json) 是一次真实但已去内容的状态快照。它保留 `quality_warning` 和搜索基准未全通过的事实，没有把状态包装成“完全健康”。
+
+## 公开仓库扫描
+
+扫描器只面向已经隔离、准备公开的产物，不直接修改私有知识库：
+
+```bash
+python3 scripts/sanitize_workspace.py scan . --fail-on high
+```
+
+它检查常见凭据、邮箱、手机号和本机用户路径。报告只包含规则、严重性和数量，不回显命中原文。
+
+如需导出普通文本工作区的脱敏副本：
+
+```bash
+python3 scripts/sanitize_workspace.py export /path/to/public-candidate \
+  --output /path/to/new-sanitized-copy
+```
+
+该命令只写入新的、位于源目录之外的文本副本；二进制和符号链接默认跳过。
+
+## 本地运行
 
 ```bash
 npm start
 ```
 
-然后访问 `http://127.0.0.1:4173`。网页中的演示文本仅在浏览器内存中处理。
+访问 <http://127.0.0.1:4173/>。App 不需要第三方运行依赖；交互仅展示架构、分区策略和已生成的无内容快照。
 
-### 2. 只扫描，不写入
-
-```bash
-python3 scripts/sanitize_workspace.py scan /path/to/workspace --fail-on high
-```
-
-报告只显示文件路径、命中规则、严重性和数量，不回显敏感原文。
-
-### 3. 导出新的脱敏副本
-
-```bash
-python3 scripts/sanitize_workspace.py export /path/to/workspace \
-  --output /path/to/sanitized-copy
-```
-
-安全默认值：
-
-- 输出目录必须位于原工作区之外。
-- 输出目录必须不存在或为空。
-- 不覆盖原文件。
-- 二进制文件和符号链接默认跳过。
-- 默认忽略 `.git`、依赖、构建产物、备份、`raw` 与临时目录。
-- 导出目录会写入不含原文的 `.redaction-manifest.json`。
-
-## 已覆盖的规则
-
-- 私钥头、常见 GitHub/OpenAI/AWS 凭据形式、Bearer 凭据。
-- 常见的密码、密钥和 token 赋值。
-- 电子邮箱和中国大陆手机号。
-- macOS 和 Windows 本机用户路径。
-
-脱敏默认使用明确占位符。如果需要跨文件识别“同一个值”，可以使用 `--mode hash`；注意，短值或可预测值的哈希仍可能被字典攻击。
-
-## 未自动覆盖的内容
-
-- 图像 EXIF、PDF/Office 隐藏层、压缩包、数据库和音视频。
-- 需要业务上下文才能识别的客户信息、商业机密和内部策略。
-- 未配置样式的新型凭据。
-- Git 历史中已经出现的旧值。
-
-更完整的依据、边界和应急顺序见 [docs/execution-basis.md](docs/execution-basis.md)。
-
-## 本项目的发布门禁
+## 验证
 
 ```bash
 npm run check
 ```
 
-该命令会先运行单元测试，再用脱敏扫描器检查仓库自身。GitHub Actions 在 push 和 pull request 时执行同一门禁。
+验证包括：
 
-## 用途
+- 本地知识库快照不泄露内容、文件名和项目路径。
+- 工作区脱敏副本不覆盖源目录。
+- 扫描报告不回显敏感片段。
+- 当前公开仓库不命中已配置的高风险规则。
 
-- 把私有项目中的通用方法整理成公开教程。
-- 生成不含真实客户或本机身份的最小复现。
-- 为日志、配置模板、演示数据建立统一审查流程。
-- 在开源或向外部协作者交付前设置团队门禁。
+GitHub Actions 在每次 push 和 pull request 时运行同一门禁。
 
-## 注意事项
+## 仍需人工处理的边界
 
-1. 真实密钥一旦进入 Git 或离开你控制的设备，先撤销/轮换，再处理历史。
-2. 不要把扫描工具当成法务、安全审计或行业合规替代品。
-3. 对财务、合同、医疗、生物识别和客户原始数据，优先不公开，而不是试图“脱敏后全发”。
-4. 发布前必须人工复核语义信息，发布后必须从远程独立回读。
+- Wiki 生成页中的语义型隐私和可组合身份线索。
+- 第三方文档、图片、论文、网页和代码的版权与许可证。
+- PDF、Office、图片、音视频和压缩包中的隐藏元数据。
+- 已进入 Git 历史的真实凭据；此时应先撤销或轮换凭据。
+- 任何财务、健康、合同、客户和身份原始数据。
 
 ## 许可证
 

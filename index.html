@@ -3,184 +3,174 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="一个本地优先、默认预览、可审计的工作区脱敏工具与公开前工作流。" />
-    <meta name="theme-color" content="#102019" />
-    <title>Workspace Veil · 工作区脱敏工作台</title>
+    <meta name="description" content="本地 LLM Wiki 知识库的工作原理、隐私分区与公开前脱敏工作流。" />
+    <meta name="theme-color" content="#0b1713" />
+    <title>Local Wiki Veil · 本地知识库脱敏台</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="Workspace Veil 首页">
-        <span class="brand-mark" aria-hidden="true">WV</span>
-        <span>Workspace Veil</span>
+      <a class="brand" href="#top" aria-label="Local Wiki Veil 首页">
+        <span class="brand-mark" aria-hidden="true">LW</span>
+        <span>Local Wiki Veil</span>
       </a>
       <nav aria-label="主导航">
-        <a href="#workbench">本地演示</a>
-        <a href="#workflow">工作流</a>
+        <a href="#architecture">工作原理</a>
+        <a href="#zones">隐私分区</a>
+        <a href="#workflow">脱敏流程</a>
         <a href="#basis">执行依据</a>
-        <a href="#cautions">注意事项</a>
       </nav>
-      <span class="local-badge"><i></i>本地处理</span>
+      <span class="local-badge"><i></i>本地知识库专用</span>
     </header>
 
     <main id="top">
       <section class="hero section-shell">
         <div class="hero-copy">
-          <p class="eyebrow">LOCAL-FIRST · PREVIEW-FIRST · EVIDENCE-BOUND</p>
-          <h1>公开之前，<br />先把私密层剥离。</h1>
+          <p class="eyebrow">LOCAL LLM WIKI · PRIVACY BY SEPARATION</p>
+          <h1>让知识留下，<br />让身份退场。</h1>
           <p class="hero-lead">
-            这不是一个“一键绝对安全”按钮。它是一条可复现的公开前管道：先缩小范围，再本地扫描，只导出脱敏副本，最后人工复核与远程回读。
+            这是针对本地 LLM Wiki 的公开前脱敏台。它不把整个知识库“洗一遍再上传”，而是把原始资料、私密档案和运行状态留在本机，只从 Wiki 中抽取可复用的方法、结构与工作流。
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#workbench">打开本地演示</a>
-            <a class="button button-ghost" href="#workflow">了解完整流程</a>
-            <a class="button button-ghost" href="https://github.com/LUCIENIN/workspace-redaction-app" target="_blank" rel="noreferrer">查看 GitHub 工作流</a>
+            <a class="button button-primary" href="#zones">检查知识分区</a>
+            <a class="button button-ghost" href="#architecture">看懂真实架构</a>
+            <a class="button button-ghost" href="https://github.com/LUCIENIN/workspace-redaction-app" target="_blank" rel="noreferrer">GitHub 工作流</a>
           </div>
-          <ul class="trust-list" aria-label="核心保障">
-            <li>不向服务器上传文本</li>
-            <li>不直接修改原工作区</li>
-            <li>不把“未命中”宣称为“零风险”</li>
+          <ul class="trust-list">
+            <li>原始资料不进入公开仓库</li>
+            <li>对话与向量索引不导出</li>
+            <li>只发布抽象后的方法和代码</li>
           </ul>
         </div>
 
-        <aside class="status-card" aria-label="安全边界摘要">
-          <div class="status-topline">
-            <span>发布前门禁</span>
-            <span class="status-dot">READY</span>
+        <aside class="knowledge-card" aria-label="本地知识库分层示意">
+          <div class="card-topline"><span>LOCAL KNOWLEDGE PIPELINE</span><b>PRIVATE</b></div>
+          <div class="stack-visual">
+            <div class="stack-layer layer-query"><span>05</span><div><b>Query</b><small>关键词 + 向量 + 图谱扩展</small></div></div>
+            <div class="stack-layer layer-graph"><span>04</span><div><b>Graph & Index</b><small>Wikilinks · LanceDB · 健康检查</small></div></div>
+            <div class="stack-layer layer-wiki"><span>03</span><div><b>Generated Wiki</b><small>来源卡 · 概念 · 综合 · 工作流</small></div></div>
+            <div class="stack-layer layer-ingest"><span>02</span><div><b>Ingest</b><small>分析 → 生成 → 审核 → 增量缓存</small></div></div>
+            <div class="stack-layer layer-raw"><span>01</span><div><b>Raw Sources</b><small>不可变原始资料 · 仅留本地</small></div></div>
           </div>
-          <div class="risk-ring" aria-hidden="true">
-            <div><strong>4</strong><span>道必经门</span></div>
-          </div>
-          <dl class="status-list">
-            <div><dt>01</dt><dd><b>范围隔离</b><span>只选择确认要公开的文件</span></dd></div>
-            <div><dt>02</dt><dd><b>规则扫描</b><span>密钥、身份、路径与联系信息</span></dd></div>
-            <div><dt>03</dt><dd><b>脱敏导出</b><span>生成新副本，保留原始证据</span></dd></div>
-            <div><dt>04</dt><dd><b>独立回读</b><span>人工复核后才可发布</span></dd></div>
-          </dl>
+          <p class="card-boundary"><span></span>公开边界位于 Wiki 方法层之上，不穿透到原始资料与运行状态。</p>
         </aside>
       </section>
 
-      <section class="metric-strip" aria-label="原则摘要">
-        <div><span>DEFAULT</span><strong>Dry run</strong><small>默认只预览</small></div>
-        <div><span>OUTPUT</span><strong>New copy</strong><small>仅生成新副本</small></div>
-        <div><span>REPORT</span><strong>No snippets</strong><small>报告不回显原文</small></div>
-        <div><span>CLAIM</span><strong>Bounded</strong><small>结论仅限已检查规则</small></div>
+      <section class="snapshot-strip" aria-label="脱敏后的本地知识库状态快照">
+        <div class="snapshot-title"><span>CONTENT-FREE SNAPSHOT</span><b>仅聚合状态，不含文件名和原文</b></div>
+        <div><strong id="wikiPages">—</strong><small>Wiki Markdown 页面</small></div>
+        <div><strong id="indexedPages">—</strong><small>向量已索引页面</small></div>
+        <div><strong id="searchScore">—</strong><small>搜索基准通过</small></div>
+        <div><strong id="healthStatus">—</strong><small>最近健康状态</small></div>
+      </section>
+      <p id="snapshotTime" class="snapshot-time section-shell">正在读取脱敏快照…</p>
+
+      <section id="architecture" class="architecture section-shell">
+        <div class="section-heading">
+          <div><p class="eyebrow">HOW THE LOCAL WIKI WORKS</p><h2>不是把文档堆进向量库，<br />而是先编译成可维护的 Wiki。</h2></div>
+          <p>当前项目遵循“原始资料 → Wiki → Schema”的三层架构。摄入只做一次并增量更新；查询时再组合分词、向量和图谱，而不是每次从所有原文重新推导。</p>
+        </div>
+
+        <div class="architecture-grid">
+          <ol class="stage-tabs" aria-label="知识库处理阶段">
+            <li><button class="stage-button active" data-stage="raw" type="button"><span>01</span><div><b>原始资料</b><small>raw/sources</small></div></button></li>
+            <li><button class="stage-button" data-stage="ingest" type="button"><span>02</span><div><b>两步摄入</b><small>Analyze → Generate</small></div></button></li>
+            <li><button class="stage-button" data-stage="wiki" type="button"><span>03</span><div><b>结构化 Wiki</b><small>frontmatter + wikilinks</small></div></button></li>
+            <li><button class="stage-button" data-stage="graph" type="button"><span>04</span><div><b>图谱与向量</b><small>Graph + LanceDB</small></div></button></li>
+            <li><button class="stage-button" data-stage="query" type="button"><span>05</span><div><b>混合检索</b><small>Keyword + Vector + Graph</small></div></button></li>
+          </ol>
+          <article id="stageDetail" class="stage-detail" aria-live="polite"></article>
+        </div>
+
+        <div class="principle-row">
+          <article><span>INCREMENTAL</span><h3>增量而非重做</h3><p>源文件内容哈希未变化时跳过，减少重复处理和不必要的模型调用。</p></article>
+          <article><span>TRACEABLE</span><h3>来源可追溯</h3><p>生成页通过 frontmatter 和 sources 字段回链原始资料，但公开时不携带私有来源。</p></article>
+          <article><span>HUMAN-GATED</span><h3>人类策展</h3><p>LLM 负责维护结构，人负责定义目的、判断隐私和决定是否发布。</p></article>
+        </div>
       </section>
 
-      <section id="workbench" class="workbench section-shell">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">LOCAL PLAYGROUND</p>
-            <h2>先看见风险，再决定是否替换</h2>
+      <section id="zones" class="zones-section">
+        <div class="section-shell">
+          <div class="section-heading light">
+            <div><p class="eyebrow">PRIVACY ROUTER</p><h2>先分区，再决定。<br />不是所有 Wiki 页面都能公开。</h2></div>
+            <p>点击任一知识层，查看它在公开工作流中的默认处置。规则来自真实目录和同步脚本，而不是通用隐私口号。</p>
           </div>
-          <p>下方文本仅在当前浏览器内存中处理。页面刷新后不保留，不发送网络请求。</p>
-        </div>
-
-        <div class="workbench-grid">
-          <div class="editor-panel">
-            <div class="panel-head">
-              <div><span class="window-dot red"></span><span class="window-dot amber"></span><span class="window-dot green"></span></div>
-              <span>INPUT · 原始文本</span>
-              <button id="loadDemo" class="text-button" type="button">载入演示</button>
-            </div>
-            <label class="sr-only" for="sourceText">要检查的文本</label>
-            <textarea id="sourceText" spellcheck="false" placeholder="粘贴一小段准备公开的文本。请不要在共享设备上处理真实密钥。"></textarea>
-            <div class="editor-actions">
-              <button id="scanButton" class="button button-primary" type="button">扫描并生成预览</button>
-              <button id="clearButton" class="button button-quiet" type="button">清空</button>
-              <span id="privacyNote">● 离线运算</span>
-            </div>
+          <div class="zone-workbench">
+            <div id="zoneButtons" class="zone-buttons" role="tablist" aria-label="知识库隐私分区"></div>
+            <article id="zoneDetail" class="zone-detail" aria-live="polite"></article>
           </div>
-
-          <div class="editor-panel output-panel">
-            <div class="panel-head">
-              <span class="result-label">OUTPUT · 脱敏预览</span>
-              <span id="findingCount" class="finding-count">0 项命中</span>
-              <button id="copyButton" class="text-button" type="button">复制结果</button>
-            </div>
-            <label class="sr-only" for="resultText">脱敏后的文本</label>
-            <textarea id="resultText" readonly placeholder="脱敏预览会显示在这里。"></textarea>
-            <div id="findings" class="findings" aria-live="polite">
-              <p class="empty-state">尚未扫描。系统会报告规则类别和数量，不在报告中回显原始敏感片段。</p>
-            </div>
+          <div class="hard-boundary">
+            <div><span>绝不上传</span><b>原始资料 · 私密档案 · 对话 · 向量库 · 队列 · 凭据</b></div>
+            <div><span>可以抽取</span><b>通用方法 · 无身份流程 · 去路径代码 · 聚合状态</b></div>
           </div>
-        </div>
-
-        <div class="rule-row" aria-label="演示规则">
-          <span>当前演示规则</span>
-          <ul id="ruleList"></ul>
         </div>
       </section>
 
       <section id="workflow" class="workflow section-shell">
         <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">REPRODUCIBLE WORKFLOW</p>
-            <h2>真实工作区的六步闭环</h2>
-          </div>
-          <p>网页是认知入口；命令行脚本才是对文件执行的可复现工作流。</p>
+          <div><p class="eyebrow">PUBLICATION WORKFLOW</p><h2>本地知识库的正确脱敏闭环</h2></div>
+          <p>目标不是复制一份“看起来干净”的私有库，而是建立一个内容更少、用途更明确、证据可回读的公开产物。</p>
         </div>
-
         <ol class="timeline">
-          <li><span>01</span><div><h3>界定公开范围</h3><p>先建“要发布的文件清单”，不对整个私有工作区做默认公开。</p></div></li>
-          <li><span>02</span><div><h3>扫描不写入</h3><p>以 dry-run 读取文本类文件，统计规则命中，不更改原文件。</p></div></li>
-          <li><span>03</span><div><h3>保守替换</h3><p>密钥、凭据、联系方式和本机用户路径替换为显式占位符。</p></div></li>
-          <li><span>04</span><div><h3>导出隔离副本</h3><p>只向新目录写入处理结果；二进制文件与符号链接默认跳过。</p></div></li>
-          <li><span>05</span><div><h3>人工双向复核</h3><p>既检查“该删的是否仍在”，也检查“不该删的是否被误伤”。</p></div></li>
-          <li><span>06</span><div><h3>远程门禁与回读</h3><p>GitHub Actions 再扫一次；推送后从远程页面和原始文件地址回读。</p></div></li>
+          <li><span>01</span><div><h3>锁定公开目的</h3><p>只回答“别人需要学会什么”，不从“我本地有什么”反推全部公开。</p></div></li>
+          <li><span>02</span><div><h3>按目录分区</h3><p>raw、private archive 和运行状态直接排除；Wiki 页面进入人工复核区。</p></div></li>
+          <li><span>03</span><div><h3>抽取方法，不搬运事实</h3><p>保留步骤、判断门和验证方式；移除客户、财务、健康、账号和项目专有细节。</p></div></li>
+          <li><span>04</span><div><h3>一般化身份与环境</h3><p>绝对路径改为变量，账号改为角色，真实数字改为范围或结构说明。</p></div></li>
+          <li><span>05</span><div><h3>生成内容零知识快照</h3><p>只输出页数、索引状态和健康结论，不输出文件名、标题、路径或内容片段。</p></div></li>
+          <li><span>06</span><div><h3>本地扫描与人工审阅</h3><p>自动规则查密钥和身份痕迹；人工复核语义泄漏、版权和业务边界。</p></div></li>
+          <li><span>07</span><div><h3>最小提交</h3><p>在隔离仓库中只暂存确认文件，检查提交作者邮箱与 Git 历史。</p></div></li>
+          <li><span>08</span><div><h3>远端门禁与回读</h3><p>CI 再扫描；发布后从 GitHub、Raw 和 Pages 独立确认最终公开内容。</p></div></li>
         </ol>
 
         <div class="command-card">
-          <div class="command-copy"><p>CLI · 默认扫描不写入</p><code>python3 scripts/sanitize_workspace.py scan /path/to/workspace --fail-on high</code></div>
-          <div class="command-copy"><p>CLI · 导出新的脱敏副本</p><code>python3 scripts/sanitize_workspace.py export /path/to/workspace --output /path/to/sanitized-copy</code></div>
+          <div><p>01 · 从私有 Wiki 生成不含内容的状态快照</p><code>python3 scripts/audit_local_kb.py "$LOCAL_KB" --output ./local-kb-snapshot.json</code></div>
+          <div><p>02 · 扫描准备公开的隔离仓库</p><code>python3 scripts/sanitize_workspace.py scan . --fail-on high</code></div>
         </div>
       </section>
 
       <section id="basis" class="basis-section">
         <div class="section-shell">
           <div class="section-heading compact light">
-            <div>
-              <p class="eyebrow">EXECUTION BASIS</p>
-              <h2>为什么这样执行</h2>
-            </div>
-            <p>这里的“执行依据”是工程与授权边界，不是对任何法律、行业或组织合规的自动证明。</p>
+            <div><p class="eyebrow">EXECUTION BASIS</p><h2>每一步都有代码和状态依据</h2></div>
+            <p>这里的“依据”指当前项目里的真实实现和安全边界，不是法律合规证明，也不意味着自动扫描可以替代业务判断。</p>
           </div>
           <div class="basis-grid">
-            <article><span>A</span><h3>用户明确授权</h3><p>只在已确认的账号、仓库、文件范围和动作上执行。</p></article>
-            <article><span>B</span><h3>数据最小化</h3><p>不因“以后可能有用”就多复制；不需要公开的内容不进入产物。</p></article>
-            <article><span>C</span><h3>原始证据保留</h3><p>不在原件上覆盖脱敏；可核验性与可回退性优先。</p></article>
-            <article><span>D</span><h3>最小权限</h3><p>CI 只请求读取仓库内容，脱敏报告不保存敏感原文片段。</p></article>
-            <article><span>E</span><h3>双重验证</h3><p>本地检查是一层，远程状态回读是另一层，任一失败都不宣称完成。</p></article>
-            <article><span>F</span><h3>结论有边界</h3><p>“未命中”只表示已配置规则没找到问题，不排除未知格式与语义泄露。</p></article>
+            <article><span>A</span><h3>安全候选筛选</h3><p>同步脚本排除认证文件、环境文件、二进制、依赖、构建产物、超大文件和符号链接。</p><code>sync-codex-knowledge.py</code></article>
+            <article><span>B</span><h3>凭据替换</h3><p>对 API Key、Token、Bearer、云访问键和常见密码赋值做显式替换，并累计脱敏数量。</p><code>redact_secrets()</code></article>
+            <article><span>C</span><h3>图谱可再生成</h3><p>技能、工作流、项目和规则节点由受控源生成；详细原始文件保存在 archive，不进入主图谱。</p><code>build-codex-graph.py</code></article>
+            <article><span>D</span><h3>健康不是单一数字</h3><p>同时检查断链、孤立页、frontmatter、正向搜索、噪声查询、图谱指纹与向量一致性。</p><code>knowledge_health.py</code></article>
+            <article><span>E</span><h3>五步日常同步</h3><p>归档同步 → frontmatter 修复 → 图谱重建 → 健康与搜索审计 → 有界本地 AI 维护。</p><code>run-daily-sync.zsh</code></article>
+            <article><span>F</span><h3>状态必须分层回读</h3><p>文件存在、图谱更新、搜索可用、向量完成和远端发布是不同证据，不能互相替代。</p><code>.llm-wiki/*.json</code></article>
           </div>
         </div>
       </section>
 
-      <section id="cautions" class="cautions section-shell">
-        <div class="section-heading compact">
-          <div><p class="eyebrow">USE CASES & CAUTIONS</p><h2>适合什么，不适合什么</h2></div>
-          <p>脱敏是风险降低手段，不是对原始数据处理责任的替代。</p>
-        </div>
-        <div class="split-cards">
-          <article class="use-card"><p class="card-kicker">SUITABLE</p><h3>适合</h3><ul><li>将内部工作流整理成公开教程</li><li>提交可复现的最小问题样例</li><li>分享配置模板、日志片段和演示数据</li><li>在开源前建立一致的团队门禁</li></ul></article>
-          <article class="avoid-card"><p class="card-kicker">NOT ENOUGH</p><h3>单靠它不够</h3><ul><li>合同、财务原件、客户记录与生物识别数据</li><li>图片、音视频、压缩包和数据库中的隐藏元数据</li><li>依赖上下文才能判断的商业机密</li><li>已经推送到 Git 历史中的真实密钥</li></ul></article>
-        </div>
-
-        <div class="warning-grid">
-          <article><span>!</span><div><h3>真实密钥一旦入库，先撤销再清理历史</h3><p>删除当前文件不会让旧提交失效。密钥轮换是第一动作。</p></div></article>
-          <article><span>!</span><div><h3>二进制文件默认跳过</h3><p>图像 EXIF、PDF 隐藏层、Office 修订记录需要专门工具和逐文档检查。</p></div></article>
-          <article><span>!</span><div><h3>误报与漏报同时存在</h3><p>自动化只能缩小人工复核范围，不能取代对项目语义的理解。</p></div></article>
-        </div>
+      <section class="receipt section-shell">
+        <div class="receipt-copy"><p class="eyebrow">WHAT THIS PUBLIC REPO CONTAINS</p><h2>公开的是方法，<br />不是你的知识库存货。</h2><p>这个仓库只包含说明页面、脱敏规则、只读聚合快照工具、测试和 CI 门禁。当前快照明确声明不包含原文、文件名和源路径。</p></div>
+        <dl class="receipt-list">
+          <div><dt>0</dt><dd>条知识原文</dd></div>
+          <div><dt>0</dt><dd>个私有文件名</dd></div>
+          <div><dt>0</dt><dd>条本机绝对路径</dd></div>
+          <div><dt id="zoneCount">5</dt><dd>类隐私分区策略</dd></div>
+        </dl>
       </section>
 
-      <section class="final-check section-shell">
-        <div><p class="eyebrow">LAST GATE</p><h2>上传前，问自己五个问题。</h2></div>
-        <ol><li><span>01</span>这个文件真的需要公开吗？</li><li><span>02</span>原始证据是否依然完好保留？</li><li><span>03</span>报告中是否没有回显敏感原文？</li><li><span>04</span>是否有另一个人或视角复核？</li><li><span>05</span>推送后是否能从远程独立回读？</li></ol>
+      <section class="cautions section-shell">
+        <div class="section-heading compact">
+          <div><p class="eyebrow">CAUTIONS</p><h2>自动化不能替你理解“这句话意味着什么”</h2></div>
+          <p>字符串扫描擅长发现格式稳定的泄漏；语义、版权、业务身份和组合推断仍然需要人判断。</p>
+        </div>
+        <div class="warning-grid">
+          <article><span>!</span><div><h3>生成页也可能包含私密事实</h3><p>Wiki 是对原始资料的结构化重述，不因“由 LLM 生成”就自动变成公开资料。</p></div></article>
+          <article><span>!</span><div><h3>向量库不是匿名数据</h3><p>Embedding、chunk、对话和检索缓存属于运行状态，默认不复制、不上传、不纳入公开演示。</p></div></article>
+          <article><span>!</span><div><h3>健康警告不能被包装成完成</h3><p>当前脱敏快照记录的是 quality_warning 与 9/10 搜索基准；页面明确保留该事实。</p></div></article>
+          <article><span>!</span><div><h3>版权边界独立于隐私边界</h3><p>移除身份信息并不自动获得复制原文、图片、论文、商业文档或第三方代码的许可。</p></div></article>
+        </div>
       </section>
     </main>
 
     <footer>
-      <div class="section-shell"><p><b>Workspace Veil</b> · 脱敏工作流示例</p><p><a href="https://github.com/LUCIENIN/workspace-redaction-app">查看源码与工作流</a> · 本地优先 · 数据最小化</p></div>
+      <div class="section-shell"><p><b>Local Wiki Veil</b> · 本地 LLM Wiki 脱敏工作流</p><p><a href="https://github.com/LUCIENIN/workspace-redaction-app">查看源码与验证记录</a> · 只抽取方法，不搬运私密知识</p></div>
     </footer>
 
     <script src="app.js" defer></script>

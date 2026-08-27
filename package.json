@@ -2,7 +2,7 @@
   "name": "workspace-redaction-app",
   "version": "1.0.0",
   "private": true,
-  "description": "A local-first workspace redaction explainer and reproducible privacy gate.",
+  "description": "A privacy router and publication workflow for a local LLM Wiki knowledge base.",
   "scripts": {
     "start": "python3 -m http.server 4173 --bind 127.0.0.1",
     "test": "python3 -m unittest discover -s tests -v",

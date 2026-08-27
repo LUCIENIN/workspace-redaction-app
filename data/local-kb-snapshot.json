@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-27T17:06:35.735329+00:00",
+  "project_type": "local-llm-wiki",
+  "content_included": false,
+  "source_paths_included": false,
+  "filenames_included": false,
+  "counts": {
+    "wiki_markdown_pages": 746,
+    "raw_source_files": 36,
+    "private_archive_files": 14
+  },
+  "health": {
+    "status": "quality_warning",
+    "observed_at": "2026-08-27T13:34:23.034575+00:00",
+    "search": {
+      "available": true,
+      "passed": 9,
+      "total": 10
+    }
+  },
+  "vector": {
+    "result": "success",
+    "observed_at": "2026-08-27T13:23:17.706126+00:00",
+    "indexed_pages": 743,
+    "indexed_chunks": 4679
+  },
+  "graph": {
+    "observed_at": "2026-08-27T13:34:17.567348+00:00",
+    "managed_pages": 623,
+    "changed": 0,
+    "removed": 0
+  },
+  "daily_sync": {
+    "result": "success",
+    "finished_at": "2026-08-27T13:34:23Z",
+    "duration_seconds": 39,
+    "health_status": "quality_warning"
+  },
+  "zones": [
+    {
+      "zone": "source",
+      "label": "原始资料层",
+      "examples": [
+        "raw/sources/",
+        "raw/assets/"
+      ],
+      "decision": "local_only",
+      "reason": "保留来源证据，不作为公开产物。"
+    },
+    {
+      "zone": "private_archive",
+      "label": "私密档案层",
+      "examples": [
+        "archive/private-*/"
+      ],
+      "decision": "never_publish",
+      "reason": "财务、健康、客户与身份原始记录不进入公开集。"
+    },
+    {
+      "zone": "runtime_state",
+      "label": "运行状态层",
+      "examples": [
+        ".llm-wiki/chats/",
+        ".llm-wiki/lancedb/",
+        ".llm-wiki/*queue*"
+      ],
+      "decision": "never_publish",
+      "reason": "对话、向量、队列、索引与本机状态可包含隐式私密。"
+    },
+    {
+      "zone": "generated_wiki",
+      "label": "Wiki 生成层",
+      "examples": [
+        "wiki/sources/",
+        "wiki/synthesis/",
+        "wiki/concepts/"
+      ],
+      "decision": "review_and_abstract",
+      "reason": "可以提炼方法，但不默认公开来源、专有事实与业务细节。"
+    },
+    {
+      "zone": "workflow",
+      "label": "方法与工具层",
+      "examples": [
+        "tools/",
+        "schema.md",
+        "purpose.md"
+      ],
+      "decision": "public_candidate",
+      "reason": "仅在去除账号、绝对路径、凭据与私有规则后公开。"
+    }
+  ],
+  "claim_boundary": "This snapshot contains aggregate counts and selected status fields only. It does not prove that any Wiki page is safe to publish."
+}
