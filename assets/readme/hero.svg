@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc">
+  <title id="title">Local Wiki Veil</title>
+  <desc id="desc">A local-first publication route that keeps private knowledge local, scans an isolated candidate, requires human review, and publishes only the approved result.</desc>
+
+  <rect width="1200" height="380" rx="28" fill="#0B2D26"/>
+  <path d="M0 312H1200" stroke="#31564C"/>
+  <path d="M720 0V380" stroke="#31564C"/>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
+    <text x="64" y="62" fill="#D5A33C" font-size="16" font-weight="700" letter-spacing="2.4">LOCAL-FIRST PRIVACY ROUTER</text>
+    <text x="64" y="132" fill="#F7F4EA" font-size="58" font-weight="760">Local Wiki Veil</text>
+    <text x="64" y="180" fill="#DCE8E1" font-size="25" font-weight="600">公开方法与流程，不上传知识原文</text>
+    <text x="64" y="222" fill="#9DB5A9" font-size="18">隔离候选集 · 本地扫描 · 人工复核 · 最小提交 · 远端回读</text>
+
+    <g transform="translate(64 266)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">
+      <rect width="150" height="34" rx="17" fill="#173F36" stroke="#4F7468"/>
+      <text x="75" y="22" text-anchor="middle" fill="#DCE8E1">DEFAULT LOCAL</text>
+      <rect x="164" width="208" height="34" rx="17" fill="#173F36" stroke="#4F7468"/>
+      <text x="268" y="22" text-anchor="middle" fill="#DCE8E1">CONTENT-FREE SNAPSHOT</text>
+      <rect x="386" width="150" height="34" rx="17" fill="#173F36" stroke="#4F7468"/>
+      <text x="461" y="22" text-anchor="middle" fill="#DCE8E1">HUMAN REVIEW</text>
+    </g>
+
+    <g transform="translate(760 34)">
+      <rect width="376" height="312" rx="20" fill="#F2EDDF"/>
+      <text x="28" y="42" fill="#6B705F" font-size="14" font-weight="700" letter-spacing="1.8">PUBLICATION ROUTE</text>
+      <path d="M28 58H348" stroke="#C9C2AE"/>
+
+      <g transform="translate(28 78)" font-size="16">
+        <rect width="320" height="38" rx="8" fill="#E3DDD0"/>
+        <circle cx="20" cy="19" r="6" fill="#9C4B3F"/>
+        <text x="38" y="24" fill="#263B34" font-weight="650">Private corpus</text>
+        <text x="298" y="24" text-anchor="end" fill="#8A4A40" font-size="12" font-weight="700">LOCAL ONLY</text>
+
+        <path d="M160 116V130" stroke="#829488" stroke-width="2"/>
+        <path d="M155 125L160 131L165 125" fill="none" stroke="#829488" stroke-width="2"/>
+
+        <rect y="132" width="320" height="38" rx="8" fill="#D7E3DC"/>
+        <circle cx="20" cy="151" r="6" fill="#2E6A58"/>
+        <text x="38" y="156" fill="#263B34" font-weight="650">Isolated candidate</text>
+        <text x="298" y="156" text-anchor="end" fill="#4D665D" font-size="12" font-weight="700">MINIMUM SET</text>
+
+        <path d="M160 170V184" stroke="#829488" stroke-width="2"/>
+        <path d="M155 179L160 185L165 179" fill="none" stroke="#829488" stroke-width="2"/>
+
+        <g transform="translate(0 186)">
+          <rect width="96" height="40" rx="8" fill="#0B2D26"/>
+          <text x="48" y="25" text-anchor="middle" fill="#F7F4EA" font-size="14" font-weight="700">SCAN</text>
+          <path d="M102 20H112" stroke="#829488" stroke-width="2"/>
+          <path d="M108 15L113 20L108 25" fill="none" stroke="#829488" stroke-width="2"/>
+          <rect x="114" width="96" height="40" rx="8" fill="#0B2D26"/>
+          <text x="162" y="25" text-anchor="middle" fill="#F7F4EA" font-size="14" font-weight="700">REVIEW</text>
+          <path d="M216 20H226" stroke="#829488" stroke-width="2"/>
+          <path d="M222 15L227 20L222 25" fill="none" stroke="#829488" stroke-width="2"/>
+          <rect x="228" width="92" height="40" rx="8" fill="#D5A33C"/>
+          <text x="274" y="25" text-anchor="middle" fill="#142C25" font-size="14" font-weight="800">PUBLISH</text>
+        </g>
+      </g>
+    </g>
+
+    <text x="64" y="348" fill="#78968A" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">SCAN RESULT IS A GATE — NOT AN ABSOLUTE SAFETY CLAIM</text>
+  </g>
+</svg>

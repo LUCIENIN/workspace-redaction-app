@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Local Wiki Veil publication workflow</title>
+  <desc id="desc">Five steps: define the public purpose, isolate a candidate set, scan locally, review manually, and read back the remote publication.</desc>
+
+  <rect width="1200" height="360" rx="26" fill="#F4F0E5"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif">
+    <text x="56" y="58" fill="#163A31" font-size="30" font-weight="760">从私有知识到公开成果：五道门</text>
+    <text x="56" y="88" fill="#697970" font-size="16">每一步都缩小公开范围；任何自动检查都不能替代最终人工判断。</text>
+
+    <g transform="translate(56 124)">
+      <g>
+        <rect width="192" height="170" rx="16" fill="#FFFFFF" stroke="#D3CCBA"/>
+        <text x="20" y="34" fill="#B4852E" font-size="14" font-weight="800">01 / PURPOSE</text>
+        <text x="20" y="72" fill="#18372F" font-size="22" font-weight="750">确定公开目的</text>
+        <text x="20" y="108" fill="#66766E" font-size="15">先回答为什么公开，</text>
+        <text x="20" y="132" fill="#66766E" font-size="15">再决定哪些内容必要。</text>
+      </g>
+
+      <path d="M198 85H218" stroke="#8A9A91" stroke-width="2"/>
+      <path d="M212 79L219 85L212 91" fill="none" stroke="#8A9A91" stroke-width="2"/>
+
+      <g transform="translate(224)">
+        <rect width="192" height="170" rx="16" fill="#FFFFFF" stroke="#D3CCBA"/>
+        <text x="20" y="34" fill="#B4852E" font-size="14" font-weight="800">02 / ISOLATE</text>
+        <text x="20" y="72" fill="#18372F" font-size="22" font-weight="750">隔离候选集</text>
+        <text x="20" y="108" fill="#66766E" font-size="15">不复制整个知识库，</text>
+        <text x="20" y="132" fill="#66766E" font-size="15">只保留必要方法与产物。</text>
+      </g>
+
+      <path d="M422 85H442" stroke="#8A9A91" stroke-width="2"/>
+      <path d="M436 79L443 85L436 91" fill="none" stroke="#8A9A91" stroke-width="2"/>
+
+      <g transform="translate(448)">
+        <rect width="192" height="170" rx="16" fill="#FFFFFF" stroke="#D3CCBA"/>
+        <text x="20" y="34" fill="#B4852E" font-size="14" font-weight="800">03 / SCAN</text>
+        <text x="20" y="72" fill="#18372F" font-size="22" font-weight="750">本地规则扫描</text>
+        <text x="20" y="108" fill="#66766E" font-size="15">检查凭据、身份线索</text>
+        <text x="20" y="132" fill="#66766E" font-size="15">与本机路径等高风险项。</text>
+      </g>
+
+      <path d="M646 85H666" stroke="#8A9A91" stroke-width="2"/>
+      <path d="M660 79L667 85L660 91" fill="none" stroke="#8A9A91" stroke-width="2"/>
+
+      <g transform="translate(672)">
+        <rect width="192" height="170" rx="16" fill="#FFFFFF" stroke="#D3CCBA"/>
+        <text x="20" y="34" fill="#B4852E" font-size="14" font-weight="800">04 / REVIEW</text>
+        <text x="20" y="72" fill="#18372F" font-size="22" font-weight="750">人工语义复核</text>
+        <text x="20" y="108" fill="#66766E" font-size="15">判断版权、业务秘密</text>
+        <text x="20" y="132" fill="#66766E" font-size="15">与可组合身份风险。</text>
+      </g>
+
+      <path d="M870 85H890" stroke="#8A9A91" stroke-width="2"/>
+      <path d="M884 79L891 85L884 91" fill="none" stroke="#8A9A91" stroke-width="2"/>
+
+      <g transform="translate(896)">
+        <rect width="192" height="170" rx="16" fill="#163A31"/>
+        <text x="20" y="34" fill="#D7AA4D" font-size="14" font-weight="800">05 / READBACK</text>
+        <text x="20" y="72" fill="#F8F4E9" font-size="22" font-weight="750">最小提交与回读</text>
+        <text x="20" y="108" fill="#BFD0C7" font-size="15">核对远端分支、Actions</text>
+        <text x="20" y="132" fill="#BFD0C7" font-size="15">和实际公开内容。</text>
+      </g>
+    </g>
+  </g>
+</svg>
