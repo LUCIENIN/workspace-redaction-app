@@ -140,7 +140,8 @@ function setupZones(zones) {
     container.append(button);
     if (index === 0) renderZone(zone, button);
   });
-  document.querySelector("#zoneCount").textContent = zones.length;
+  const zoneCount = document.querySelector("#zoneCount");
+  if (zoneCount) zoneCount.textContent = zones.length;
 }
 
 function formatObserved(value) {
@@ -159,19 +160,56 @@ async function loadSnapshot() {
     const response = await fetch("data/local-kb-snapshot.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`snapshot ${response.status}`);
     const snapshot = await response.json();
-    document.querySelector("#wikiPages").textContent = snapshot.counts?.wiki_markdown_pages ?? "—";
-    document.querySelector("#indexedPages").textContent = snapshot.vector?.indexed_pages ?? "—";
+    const wikiPages = snapshot.counts?.wiki_markdown_pages ?? "—";
+    const indexedPages = snapshot.vector?.indexed_pages ?? "—";
     const passed = snapshot.health?.search?.passed;
     const total = snapshot.health?.search?.total;
-    document.querySelector("#searchScore").textContent = Number.isInteger(passed) && Number.isInteger(total) ? `${passed}/${total}` : "—";
-    document.querySelector("#healthStatus").textContent = snapshot.health?.status ?? "unknown";
+    const searchScore = Number.isInteger(passed) && Number.isInteger(total) ? `${passed}/${total}` : "—";
+    const healthStatus = snapshot.health?.status ?? "unknown";
+    document.querySelector("#snapshotSummary").textContent = `${wikiPages} 页 · ${indexedPages} 页已索引 · 搜索 ${searchScore} · ${healthStatus}`;
     document.querySelector("#snapshotTime").textContent = `状态观察时间：${formatObserved(snapshot.health?.observed_at)}。这是静态、无内容快照，不是实时监控，也不证明任何具体页面可公开。`;
     setupZones(Array.isArray(snapshot.zones) && snapshot.zones.length ? snapshot.zones : fallbackZones);
   } catch (error) {
+    document.querySelector("#snapshotSummary").textContent = "快照不可用 · 当前状态未知";
     document.querySelector("#snapshotTime").textContent = `快照读取失败：${error.message}。页面仍可浏览，但当前本地状态未知。`;
     setupZones(fallbackZones);
   }
 }
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall back to the selection-based copy path below.
+    }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  return copied;
+}
+
+document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const target = document.getElementById(button.dataset.copyTarget);
+    if (!target) return;
+    const originalLabel = button.textContent;
+    const copied = await copyText(target.textContent.trim());
+    button.textContent = copied ? "已复制" : "复制失败";
+    window.setTimeout(() => {
+      button.textContent = originalLabel;
+    }, 1800);
+  });
+});
 
 renderStage("raw");
 loadSnapshot();
